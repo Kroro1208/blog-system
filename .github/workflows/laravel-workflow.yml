@@ -51,15 +51,15 @@ jobs:
       - name: Run Laravel Pint
         run: ./vendor/bin/pint --test
 
-      - name: Run PHPUnit tests
+      - name: Run Pest tests
         env:
-          DB_CONNECTION: mysql
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
           DB_HOST: 127.0.0.1
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          DB_DATABASE: laravel
-          DB_USERNAME: root
-          DB_PASSWORD: password
-        run: php artisan test
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: ./vendor/bin/pest
 
       - name: Run database migrations
         env:
