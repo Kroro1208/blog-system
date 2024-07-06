@@ -14,11 +14,11 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_DATABASE: laravel
+          MYSQL_DATABASE: hotel_booking_system
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v3
@@ -28,6 +28,7 @@ jobs:
         with:
           php-version: "8.2"
 
+      # .envファイルの存在を確認
       - name: Verify .env file
         run: |
           if [ ! -f ".env" ]; then
@@ -35,9 +36,16 @@ jobs:
             exit 1
           fi
 
+      # .envファイルの内容を環境変数としてエクスポート
+      - name: Set environment variables from .env
+        run: |
+          set -o allexport
+          source .env
+          set +o allexport
+
       - name: Install Dependencies
         run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist || composer update
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Generate key
         run: php artisan key:generate
@@ -69,13 +77,6 @@ jobs:
           cat storage/logs/laravel.log
 
       - name: Run database migrations
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan migrate --force
 
   # deploy:
