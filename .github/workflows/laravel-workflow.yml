@@ -41,26 +41,26 @@ jobs:
       - name: Set Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-  deploy:
-    needs: laravel-tests
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  # deploy:
+  #   needs: laravel-tests
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: "8.2"
 
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+  #     - name: Install Dependencies
+  #       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Deploy with Laravel Workflow
-        run: php artisan workflow:deploy
-        env:
-          WORKFLOW_ENABLED: true
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+  #     - name: Deploy with Laravel Workflow
+  #       run: php artisan workflow:deploy
+  #       env:
+  #         WORKFLOW_ENABLED: true
+  #         DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+  #         DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+  #         DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
