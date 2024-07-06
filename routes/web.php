@@ -11,8 +11,6 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 Route::get('/contact/complete', [ContactController::class, 'complete'])->name('contact.complete');
 Route::post('/contact', [ContactController::class, 'sendMail'])->name(('contact.sendMail'));
 
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -23,4 +21,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

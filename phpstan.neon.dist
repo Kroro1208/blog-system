@@ -2,7 +2,8 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
+    level: max
     paths:
         - app
-    level: 5
-    checkMissingIterableValueType: false
+        - tests
+    # その他の設定

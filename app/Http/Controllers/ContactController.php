@@ -29,8 +29,9 @@ class ContactController extends Controller
             'content' => ['required', 'string', 'max:2000'],
         ]);
 
-        Log::debug($validated['name'] . 'さんよりお問い合わせがありました');
+        Log::debug($validated['name'].'さんよりお問い合わせがありました');
         FacadesSession::flash('success-message', '作成に成功しました');
+
         return to_route('contact.complete');
     }
 }
