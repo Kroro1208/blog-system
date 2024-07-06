@@ -51,11 +51,14 @@ jobs:
       - name: Run Laravel Pint
         run: ./vendor/bin/pint --test
 
+      - name: Security check
+        run: composer audit
+
       - name: Run database migrations
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
           DB_HOST: 127.0.0.1
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
