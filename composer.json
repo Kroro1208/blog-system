@@ -11,6 +11,7 @@
     },
     "require-dev": {
         "askdkc/breezejp": "^1.8",
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
         "friendsofphp/php-cs-fixer": "^3.59",
         "laravel/breeze": "^2.1",
