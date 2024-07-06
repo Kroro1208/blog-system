@@ -26,6 +26,14 @@
                     </div>
                 </header>
             @endisset
+            @if (session('message'))
+                @php
+                    $alertType = session('alert-type', 'info');
+                @endphp
+                <div class="alert alert-{{ $alertType }}">
+                    {{ session('message') }}
+                </div>
+            @endif
 
             <!-- Page Content -->
             <main>

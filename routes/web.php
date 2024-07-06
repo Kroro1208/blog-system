@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'index');
+
+//　お問い合わせフォーム
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::get('/contact/complete', [ContactController::class, 'complete'])->name('contact.complete');
+Route::post('/contact', [ContactController::class, 'sendMail'])->name(('contact.sendMail'));
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -17,4 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
