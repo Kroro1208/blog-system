@@ -17,7 +17,7 @@ jobs:
           MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
-          - 3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -55,21 +55,21 @@ jobs:
 
       - name: Run database migrations
         env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_USERNAME: root
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan migrate --force
 
       - name: Run Pest tests
         env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_USERNAME: root
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./vendor/bin/pest
 
@@ -86,11 +86,11 @@ jobs:
       - name: Run failed Pest tests only
         if: failure()
         env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_USERNAME: root
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./vendor/bin/pest --failed
 
