@@ -28,8 +28,12 @@ jobs:
         with:
           php-version: "8.2"
 
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Verify .env file
+        run: |
+          if [ ! -f ".env" ]; then
+            echo ".env file not found"
+            exit 1
+          fi
 
       - name: Install Dependencies
         run: |
@@ -53,6 +57,16 @@ jobs:
 
       - name: Security check
         run: composer audit
+
+      - name: Debug information
+        if: failure()
+        run: |
+          php --version
+          composer --version
+          php artisan --version
+          cat .env
+          ls -la
+          cat storage/logs/laravel.log
 
       - name: Run database migrations
         env:
