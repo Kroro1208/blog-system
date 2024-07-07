@@ -10,7 +10,8 @@ class AdminBlogController extends Controller
 {
     public function index()
     {
-        return view('admin.blogs.index');
+        $blogs = Blog::all();
+        return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
     public function create()
