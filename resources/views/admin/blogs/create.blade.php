@@ -4,27 +4,30 @@
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form>
+            <form action="{{route('admin.blogs.store')}}" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">ブログ登録</h3>
                     <div class="ml-auto">
-                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">保存</button>
+                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">投稿</button>
                     </div>
                 </div>
 
                 <div class="pt-4 px-6">
                     <!-- ▼▼▼▼エラーメッセージ▼▼▼▼　-->
-                    <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
-                        <ul>
-                            <li class="text-red-400">タイトルは、必ず指定してください。</li>
-                            <li class="text-red-400">画像は、必ず指定してください。</li>
-                            <li class="text-red-400">本文は、必ず指定してください。</li>
-                        </ul>
-                    </div>
+                    @if ($errors->any())
+                        <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-red-500">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="title">タイトル</label>
-                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="">
+                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="{{old('title')}}">
                     </div>
 
                     <div class="mb-6">
@@ -36,14 +39,14 @@
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="body">本文</label>
-                        <textarea id="body" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="body" rows="5"></textarea>
+                        <label class="block text-sm font-medium mb-2" for="content">本文</label>
+                        <textarea id="content" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="content" rows="5">{{ old('content') }}</textarea>
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="category">カテゴリ</label>
                         <div class="flex">
-                            <select id="category" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="">
+                            <select id="category" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="category">
                                 <option>Option 1</option>
                                 <option>Option 2</option>
                                 <option>Option 3</option>
