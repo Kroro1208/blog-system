@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,16 +21,10 @@ class ContactController extends Controller
         return view('contact.complete');
     }
 
-    public function sendMail(Request $request): RedirectResponse
+    public function sendMail(ContactRequest $request): RedirectResponse
     {
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email'],
-            'phone' => ['nullable', 'regex:/^[0-9\-]+$/'],
-            'content' => ['required', 'string', 'max:2000'],
-        ]);
+        $validated = $request->validated();
 
         Log::debug($validated['name'] . 'さんよりお問い合わせがありました');
         FacadesSession::flash('success-message', '作成に成功しました');
