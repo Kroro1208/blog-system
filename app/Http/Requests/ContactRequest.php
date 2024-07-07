@@ -33,7 +33,7 @@ class ContactRequest extends FormRequest
     public function attributes()
     {
         return [
-            'content' => 'お問い合わせ内容'
+            'content' => 'お問い合わせ内容',
         ];
     }
 }
