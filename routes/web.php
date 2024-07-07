@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,11 @@ Route::view('/', 'welcome');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/contact/complete', [ContactController::class, 'complete'])->name('contact.complete');
 Route::post('/contact', [ContactController::class, 'sendMail'])->name(('contact.sendMail'));
+
+// ブログ
+Route::get('/admin/blogs', [AdminBlogController::class, 'index'])->name('admin.blogs.index');
+Route::get('/admin/blogs/create', [AdminBlogController::class, 'create'])->name('admin.blogs.create');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -25,4 +31,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
