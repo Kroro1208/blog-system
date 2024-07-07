@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+@extends('layouts.app')
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-</head>
-<body>
-    @if (session('success-message'))
-        <div class="alert alert-success alert-dismissible fade show m-5 text-center" role="alert">
-            <p>{{ session('success-message') }}</p>
+@section('content')
+<div class="container">
+    <div class="row bg-light text-dark py-5">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="fs-1 mb-5 text-center fw-bold">お問い合わせ完了</h2>
+
+            @if (session('success-message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success-message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            <p>お問い合わせありがとうございます。メッセージは正常に送信されました。</p>
         </div>
-    @endif
-</body>
-</html>
+    </div>
+</div>
+@endsection
