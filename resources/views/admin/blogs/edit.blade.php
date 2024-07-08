@@ -7,7 +7,7 @@
             <form action="{{route('admin.blogs.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
-                    <h3 class="text-xl font-bold">ブログ登録</h3>
+                    <h3 class="text-xl font-bold">ブログ更新</h3>
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">投稿</button>
                     </div>
@@ -27,30 +27,30 @@
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="title">タイトル</label>
-                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="{{old('title')}}">
+                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="{{old('title', $blog->title)}}">
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="image">画像</label>
                         <div class="flex items-end">
-                            <img id="previewImage" src="/images/admin/noimage.jpg" data-noimage="/images/admin/noimage.jpg" alt="" class="rounded shadow-md w-64">
+                            <img id="previewImage" src="{{ asset('storage/' . $blog->image) }}" data-noimage="/images/admin/noimage.jpg" alt="" class="rounded shadow-md w-64">
                             <input id="image" class="block w-full px-4 py-3 mb-2" type="file" accept='image/*' name="image">
                         </div>
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="content">本文</label>
-                        <textarea id="content" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="content" rows="5">{{ old('content') }}</textarea>
+                        <textarea id="content" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="content" rows="5">{{ old('content', $blog->content) }}</textarea>
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="category">カテゴリ</label>
                         <div class="flex">
                             <select id="category" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="category">
-                                <option value='1' {{ old('category') == 1 ? 'selected' : '' }}>種類</option>
-                                <option value='2' {{ old('category') == 2 ? 'selected' : '' }}>エサ</option>
-                                <option value='3' {{ old('category') == 3 ? 'selected' : '' }}>おもちゃ</option>
-                                <option value='4' {{ old('category') == 4 ? 'selected' : '' }}>習性</option>
+                                <option value='1' {{ old('category', $blog->category) == 1 ? 'selected' : '' }}>種類</option>
+                                <option value='2' {{ old('category', $blog->category) == 2 ? 'selected' : '' }}>エサ</option>
+                                <option value='3' {{ old('category', $blog->category) == 3 ? 'selected' : '' }}>おもちゃ</option>
+                                <option value='4' {{ old('category', $blog->category) == 4 ? 'selected' : '' }}>習性</option>
                             </select>
                             <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
