@@ -12,7 +12,9 @@ class AdminBlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::all();
+        // $blogs = Blog::latest('updated_at')->limit(10)->get();
+        $blogs = Blog::latest('updated_at')->paginate(10);
+
         return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
