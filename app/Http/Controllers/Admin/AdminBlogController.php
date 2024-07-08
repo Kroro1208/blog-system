@@ -41,33 +41,33 @@ class AdminBlogController extends Controller
         return view('admin.blogs.edit', ['blog' => $blog]);
     }
 
-    // public function update(UpdateBlogRequest $request, Blog $blog)
-    // {
-    //     $updatedDate = $request->validated();
-    //     if ($request->hasFile('image')) {
-    //         $saveImagePath = $request->file('image')->store('blogs', 'public');
-    //         $updatedDate['image'] = $saveImagePath;
-
-    //         $blog->update($updatedDate);
-    //     }
-
-    //     return to_route('admin.blogs.index')->with('success', '記事が更新されました');
-    // }
-
-    public function update(UpdateBlogRequest $request,  string $id)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $blog = Blog::findOrFail($id);
-        $updatedData = $request->validated();
+        $updatedDate = $request->validated();
         if ($request->hasFile('image')) {
-            // 変更前の画像を削除
-            Storage::disk('public')->delete($blog->image);
-            $updatedDate['image'] = $request->file('image')->store('blogs', 'public');
+            $saveImagePath = $request->file('image')->store('blogs', 'public');
+            $updatedDate['image'] = $saveImagePath;
 
             $blog->update($updatedDate);
         }
 
         return to_route('admin.blogs.index')->with('success', '記事が更新されました');
     }
+
+    // public function update(UpdateBlogRequest $request,  string $id)
+    // {
+    //     $blog = Blog::findOrFail($id);
+    //     $updatedData = $request->validated();
+    //     if ($request->hasFile('image')) {
+    //         // 変更前の画像を削除
+    //         Storage::disk('public')->delete($blog->image);
+    //         $updatedDate['image'] = $request->file('image')->store('blogs', 'public');
+
+    //         $blog->update($updatedDate);
+    //     }
+
+    //     return to_route('admin.blogs.index')->with('success', '記事が更新されました');
+    // }
 
     public function destroy(Blog $blog) // $id
     {
