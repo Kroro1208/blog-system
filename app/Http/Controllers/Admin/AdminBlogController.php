@@ -45,14 +45,13 @@ class AdminBlogController extends Controller
 
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $updatedDate = $request->validated();
+        $updatedData = $request->validated();
         if ($request->hasFile('image')) {
             $saveImagePath = $request->file('image')->store('blogs', 'public');
-            $updatedDate['image'] = $saveImagePath;
+            $updatedData['image'] = $saveImagePath;
+        };
 
-            $blog->update($updatedDate);
-        }
-
+        $blog->update($updatedData);
         return to_route('admin.blogs.index')->with('success', '記事が更新されました');
     }
 
